@@ -10,23 +10,19 @@ function insert(value) {
 // Function to maintain the max heap property by bubbling up
 function bubbleUp(index) {
     let parentIndex = Math.floor((index - 1) / 2);
-    if (index > 0 && heap[index] > heap[parentIndex]) {
+    console.log("Parent Index:", parentIndex, "Index:", index, heap[index], heap[parentIndex]);
+    while (index > 0 && heap[index] > heap[parentIndex]) {
         // Swap if current node is greater than parent
         [heap[index], heap[parentIndex]] = [heap[parentIndex], heap[index]];
         bubbleUp(parentIndex);  // Recursively bubble up
     }
 }
 
-// Function to get the heap in array format
-// function getHeap() {
-//     return heap;
-// }
-
 const arr = [5, 2, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -5, -4, -3, -2]
 const start = (arr) => {
-    for (let i = 0; i < arr.length; i++) {
-        insert(arr[i]);
-    }
+    arr.forEach(element => {
+        insert(element);
+    });
     return heap;
 }
 console.log("Max Heap Array:", start(arr));
