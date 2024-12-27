@@ -22,21 +22,30 @@
 // --------------------------- Recursion ---------------------------------
 
 // recursion
-// function arrayElemOccur(arr, numToCount, start) {
-//     let count = start;
+// function arrayElemOccur(arr, numToCount) {
+//     let count = 0;
 //     let newIndex = arr.indexOf(numToCount);
 //     if (newIndex >= 0) {
 //         count += 1;
-//         arr.pop(arr[newIndex]);
-//         return arrayElemOccur(arr, numToCount, count);
+//         // arr.pop(arr[newIndex]); Wrong
+//         // pop removes element from the last not in between.
+//         // Use splice instead.
+//         arr.splice(newIndex, 1);
+//         return arrayElemOccur(arr, numToCount);
 //     } else {
-//         console.log('count --- ', count);
 //         return count;
 //     }
 // }
+// Bad code, o(n^2)
 
-// console.log(arrayElemOccur([1, 2, 2, 3], 2, 0));
-// console.log(arrayElemOccur([4, 4, 1, 4, 3, 2, 5, 3, 4, 5], 4, 0));
+// recursion 2
+function arrayElemOccur(arr, numToCount, index = 0) {
+    if (index === arr.length) return 0;
+    return (arr[index] === numToCount ? 1 : 0) + arrayElemOccur(arr, numToCount, index + 1);
+}
+
+console.log(arrayElemOccur([1, 2, 2, 3, 2], 2));
+// console.log(arrayElemOccur([4, 4, 1, 4, 3, 2, 5, 3, 4, 5], 4));
 
 // -------------------------------- Reduce ---------------------------
 /*
@@ -50,5 +59,5 @@ function arrayElemOccur(arr, numToCount) {
     return arr.reduce((count, current) => count + (current === numToCount ? 1 : 0), 0);
 }
 
-console.log(arrayElemOccur([1, 2, 2, 3], 2));
+// console.log(arrayElemOccur([1, 2, 2, 3], 2));
 // console.log(arrayElemOccur([4, 4, 1, 4, 3, 2, 5, 3, 4, 5], 4, 0));
