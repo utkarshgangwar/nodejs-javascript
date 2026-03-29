@@ -1,0 +1,17 @@
+const obj = {
+  name: "Utkarsh",
+  greet: function () {
+    console.log(this.name);
+  },
+  greetArrow: () => {
+    console.log(this.name);
+  },
+};
+
+obj.greet();
+obj.greetArrow();
+
+/**
+ * Utkarsh
+ * undefined
+ */
