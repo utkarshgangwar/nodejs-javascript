@@ -10,41 +10,41 @@ redisClient.on("error", (err) => console.log("Redis Error", err));
   await redisClient.connect();
 })();
 
-// const store = new Map();
+const store = new Map();
 const Rate_Limit = 5;
 const window_size = 60 * 1000;
 
-// function rateLimiter(req, res, next) {
-//   const userIp = req.ip;
-//   const currentTime = Date.now();
+function rateLimiter(req, res, next) {
+  const userIp = req.ip;
+  const currentTime = Date.now();
 
-//   if (!store.has(userIp)) {
-//     store.set(userIp, {
-//       count: 1,
-//       startTime: currentTime,
-//     });
-//     return next();
-//   }
+  if (!store.has(userIp)) {
+    store.set(userIp, {
+      count: 1,
+      startTime: currentTime,
+    });
+    return next();
+  }
 
-//   const data = store.get(userIp);
-//   const timeDiff = currentTime - data.startTime;
+  const data = store.get(userIp);
+  const timeDiff = currentTime - data.startTime;
 
-//   if (timeDiff < window_size) {
-//     data.count++;
-//     if (data.count > Rate_Limit) {
-//       return res.status(429).json({
-//         message: "Too many requests",
-//       });
-//     }
-//   } else {
-//     store.set(userIp, {
-//       count: 1,
-//       startTime: currentTime,
-//     });
-//   }
+  if (timeDiff < window_size) {
+    data.count++;
+    if (data.count > Rate_Limit) {
+      return res.status(429).json({
+        message: "Too many requests",
+      });
+    }
+  } else {
+    store.set(userIp, {
+      count: 1,
+      startTime: currentTime,
+    });
+  }
 
-//   next();
-// }`
+  next();
+}
 
 async function rateLimiterWithRedis(req, res, next) {
   try {
