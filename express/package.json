@@ -1,4 +1,8 @@
 {
+  "scripts": {
+     "dev-redis": "node index.js",
+     "dev-express": "node index-express.js"
+  },
   "dependencies": {
     "express": "^5.2.1",
     "redis": "^5.11.0"
